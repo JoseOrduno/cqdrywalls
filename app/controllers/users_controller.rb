@@ -1,13 +1,14 @@
 class UsersController < ApplicationController
-  skip_before_action :authorized, only: %i[create login]
+  skip_before_action :authorized, only: :login
+  before_action :admin?, only: %i[create index]
 
   def create
     @user = User.create(user_params)
     if @user.valid?
       token = encode_token({ user_id: @user.id })
-      render json: { user: @user, token: token }
+      render json: { user: @user, token: "Bearer #{token}" }
     else
-      render json: { error: 'Invalid username or password' }
+      render json: { error: @user.errors.messages }
     end
   end
 
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
 
     if @user&.authenticate(params[:password])
       token = encode_token({ user_id: @user.id })
-      render json: { user: { name: @user.name, email: @user.email }, token: token }
+      render json: { user: { name: @user.name, email: @user.email }, token: "Bearer #{token}" }
     else
       render json: { error: 'Invalid username or password' }
     end
