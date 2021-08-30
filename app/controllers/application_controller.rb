@@ -2,6 +2,10 @@
 class ApplicationController < ActionController::API
   before_action :authorized
 
+  def admin?
+    render json: { error: 'role invalid' } unless @user.admin?
+  end
+
   def encode_token(payload)
     JWT.encode(payload, ENV['ENCRYPT_PASSWORD'])
   end
