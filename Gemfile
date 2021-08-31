@@ -19,6 +19,9 @@ gem 'bcrypt', '~> 3.1.7'
 # encrypt token
 gem 'jwt'
 
+#work with google storage 
+gem 'carrierwave-google-storage'
+
 # add environment variables 
 gem 'dotenv-rails'
 
