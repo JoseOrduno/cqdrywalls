@@ -1,0 +1,53 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/users":
+    post:
+      summary: Creates a user
+      tags:
+      - users
+      security:
+      - Bearer: {}
+      parameters: []
+      responses:
+        '201':
+          description: blog created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                lastname:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                role:
+                  type: string
+                  enum:
+                  - admin
+                  - employee
+              required:
+              - title
+              - content
+components:
+  securitySchemes:
+    Bearer:
+      description: JWT key necessary to use API calls
+      type: apiKey
+      name: authorization
+      in: header
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
