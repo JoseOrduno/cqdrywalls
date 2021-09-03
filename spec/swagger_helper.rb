@@ -18,7 +18,10 @@ RSpec.configure do |config|
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
       info: {
-        title: 'API V1',
+        title: 'Cqdrywalls-api',
+        description: 'api for cqdrywalls apps',
+        contact: 'jose.m.orduno@gmail.com',
+        license: 'MIT',
         version: 'v1'
       },
       paths: {},
