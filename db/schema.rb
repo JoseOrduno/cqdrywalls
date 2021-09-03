@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_31_011017) do
+ActiveRecord::Schema.define(version: 2021_09_02_205343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(version: 2021_08_31_011017) do
     t.date "start_date"
     t.date "finish_date"
     t.date "cost"
+    t.bigint "employee_id"
+    t.index ["employee_id"], name: "index_reports_on_employee_id"
     t.index ["user_id"], name: "index_reports_on_user_id"
   end
 

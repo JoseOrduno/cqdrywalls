@@ -1,6 +1,28 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/users', type: :request do
+  path '/login' do
+    post 'user-login with simple credentials' do
+      tags 'users'
+      consumes 'application/json'
+      parameter name: :user, in: :body, schema: {
+        type: :object,
+        properties: {
+          email: { type: :string },
+          password: { type: :string }
+        }
+      }
+
+      response '201', 'user created' do
+        run_test!
+      end
+
+      response '422', 'invalid request' do
+        run_test!
+      end
+    end
+  end
+
   path '/users' do
     post 'Creates a user' do
       tags 'users'
@@ -21,15 +43,24 @@ RSpec.describe 'api/users', type: :request do
         required: %w[title content]
       }
 
-      response '201', 'blog created' do
-        let(:blog) { { title: 'foo', content: 'bar' } }
-        let(:Authorization) { "Bearer #{token_for(user)}" }
-
+      response '201', 'user created' do
         run_test!
       end
 
       response '422', 'invalid request' do
-        let(:blog) { { title: 'foo' } }
+        run_test!
+      end
+    end
+    get 'get all users' do
+      tags 'users'
+      consumes 'application/json'
+      security [Bearer: {}]
+
+      response '201', 'get users' do
+        run_test!
+      end
+
+      response '422', 'invalid request' do
         run_test!
       end
     end
