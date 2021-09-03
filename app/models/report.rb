@@ -1,5 +1,6 @@
 class Report < ApplicationRecord
   belongs_to :user
+  belongs_to :assigned_report, class_name: :User, foreign_key: :employee_id, optional: true
   has_many :photos
   has_many :comments
 
