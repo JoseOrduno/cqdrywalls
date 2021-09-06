@@ -91,10 +91,11 @@ RSpec.configure do |config|
       },
       servers: [
         {
-          url: 'http://{defaultHost}',
+          url: '{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'localhost:3000'
+              default: 'https://rocky-journey-06295.herokuapp.com',
+              enum: ['https://rocky-journey-06295.herokuapp.com', 'http://localhost:3000']
             }
           }
         }
