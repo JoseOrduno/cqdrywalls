@@ -3,7 +3,9 @@ class PhotosController < ApplicationController
 
   # GET /photos
   def index
-    @photos = Photo.all
+    report_id = request.headers["report_id"]
+    @report = Report.find_by(report_id)
+    @photos= @report.photos
 
     render json: @photos
   end
@@ -16,7 +18,7 @@ class PhotosController < ApplicationController
   # POST /photos
   def create
     @report = Report.find_by(id: params[:report_id])
-    @photo = @report.photos.new(name: params[:image_file], report_id: params[:report_id])
+    @photo = @report.photos.new(url: params[:image_file], report_id: params[:report_id])
 
     if @photo.save
       render json: @photo, status: :created, location: @photo
