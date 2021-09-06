@@ -1,24 +1,48 @@
-# README
+# cqdrywalls api
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+this is an example api working with 4 models and relationships, have security with jwt and have  functionality to upload files to google bucket
 
-Things you may want to cover:
+example server [here](https://rocky-journey-06295.herokuapp.com/index.html)
 
-* Ruby version
+## Installation 
 
-* System dependencies
+install ruby and RoR specified in file config
 
-* Configuration
+install postgresql
+ 
+guide [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-20-04)
 
-* Database creation
 
-* Database initialization
 
-* How to run the test suite
+add .env file with this values 
+```bash
+ENCRYPT_PASSWORD=""
+DATABASE_NAME=""
+DATABASE_USER=""
+DATABASE_PASSWORD=""
+DATABASE_USER_TEST=""
+DATABASE_NAME_TEST=""
+DATABASE_PASSWORD_TEST=""
+DATABASE_NAME_DEVELOPMENT=""
+DATABASE_USER_DEVELOPMENT=""
+GOOGLE_BUCKET=""
+GOOGLE_BUCKET_KEY=""
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+install gems 
+```bash
+bundler install 
+```
 
-* Deployment instructions
+generate tables in our database 
+```
+rake db:migrate
+```
 
-* ...
+generate user with admin role
+```
+rails db:seed
+```
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
