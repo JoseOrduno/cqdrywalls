@@ -1,4 +1,5 @@
 class Photo < ApplicationRecord
-  mount_uploader :name, PhotoUploader
+  mount_uploader :url, PhotoUploader
   belongs_to :report
+
 end
