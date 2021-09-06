@@ -94,11 +94,8 @@ RSpec.configure do |config|
           url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'localhost:3000'
-            }, 
-            production: {
               default: 'https://rocky-journey-06295.herokuapp.com/'
-            }
+            }, 
           }
         }
       ]
