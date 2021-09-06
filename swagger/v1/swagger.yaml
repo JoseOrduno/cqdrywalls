@@ -1,9 +1,254 @@
 ---
 openapi: 3.0.1
 info:
-  title: API V1
+  title: Cqdrywalls-api
+  description: api for cqdrywalls apps
+  contact: jose.m.orduno@gmail.com
+  license: MIT
   version: v1
 paths:
+  "/comments":
+    post:
+      summary: Create a comment
+      tags:
+      - Comments
+      security:
+      - Bearer: {}
+      parameters: []
+      responses:
+        '201':
+          description: comment created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#components/schemas/comment_data"
+    get:
+      summary: get all comments by report
+      tags:
+      - Comments
+      security:
+      - Bearer: {}
+      parameters:
+      - name: report_id
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: get all comments by report
+        '422':
+          description: invalid request
+    delete:
+      summary: delete a comment
+      tags:
+      - Comments
+      security:
+      - Bearer: {}
+      parameters:
+      - name: report_id
+        in: header
+        schema:
+          type: object
+          properties:
+            comment_id:
+              type: string
+      responses:
+        '201':
+          description: comment deleted
+        '422':
+          description: invalid request
+    put:
+      summary: update a comment
+      tags:
+      - Comments
+      security:
+      - Bearer: {}
+      parameters: []
+      responses:
+        '201':
+          description: comment updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#components/schemas/comment_data"
+  "/photos":
+    post:
+      summary: Create a photo
+      tags:
+      - Photos
+      security:
+      - Bearer: {}
+      parameters: []
+      responses:
+        '201':
+          description: photo created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              "$ref": "#components/schemas/photo_data"
+    get:
+      summary: get all photos by report
+      tags:
+      - Photos
+      security:
+      - Bearer: {}
+      parameters:
+      - name: report_id
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: get all photos by Reports
+        '422':
+          description: invalid request
+    delete:
+      summary: delete a photo
+      tags:
+      - Photos
+      security:
+      - Bearer: {}
+      parameters:
+      - name: report_id
+        in: header
+        schema:
+          type: object
+          properties:
+            photo_id:
+              type: string
+      responses:
+        '201':
+          description: photo deleted
+        '422':
+          description: invalid request
+    put:
+      summary: update a photo
+      tags:
+      - Photos
+      security:
+      - Bearer: {}
+      parameters: []
+      responses:
+        '201':
+          description: photo updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              "$ref": "#components/schemas/photo_data"
+  "/reports":
+    post:
+      summary: Creates a report
+      tags:
+      - Reports
+      security:
+      - Bearer: {}
+      parameters: []
+      responses:
+        '201':
+          description: report created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#components/schemas/report_data"
+    get:
+      summary: get all reports
+      tags:
+      - Reports
+      security:
+      - Bearer: {}
+      responses:
+        '200':
+          description: get reports
+        '422':
+          description: invalid request
+  "/reports/{id}":
+    get:
+      summary: get report
+      tags:
+      - Reports
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: get reports
+        '422':
+          description: invalid request
+    delete:
+      summary: delete report
+      tags:
+      - Reports
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: delete report
+        '422':
+          description: invalid request
+    put:
+      summary: update report
+      tags:
+      - Reports
+      security:
+      - Bearer: {}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: report update
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#components/schemas/report_data"
+  "/login":
+    post:
+      summary: user-login with simple credentials
+      tags:
+      - users
+      parameters: []
+      responses:
+        '201':
+          description: user created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#components/schemas/login_data"
   "/users":
     post:
       summary: Creates a user
@@ -14,31 +259,25 @@ paths:
       parameters: []
       responses:
         '201':
-          description: blog created
+          description: user created
         '422':
           description: invalid request
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                lastname:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
-                role:
-                  type: string
-                  enum:
-                  - admin
-                  - employee
-              required:
-              - title
-              - content
+              "$ref": "#components/schemas/user_data"
+    get:
+      summary: get all users
+      tags:
+      - users
+      security:
+      - Bearer: {}
+      responses:
+        '201':
+          description: get users
+        '422':
+          description: invalid request
 components:
   securitySchemes:
     Bearer:
@@ -46,6 +285,77 @@ components:
       type: apiKey
       name: authorization
       in: header
+  schemas:
+    report_data:
+      type: object
+      properties:
+        user_id:
+          type: integer
+        employee_id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        address:
+          type: string
+        start_date:
+          type: string
+          format: date
+        finish_date:
+          type: string
+          format: date
+        cost:
+          type: number
+        latitude:
+          type: number
+          format: Float
+        longitude:
+          type: number
+          format: Float
+    user_data:
+      type: object
+      properties:
+        name:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+          enum:
+          - admin
+          - employee
+    login_data:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    photo_data:
+      type: object
+      properties:
+        image_file:
+          type: file
+        name:
+          type: string
+        report_id:
+          type: integer
+    comment_data:
+      type: object
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+        user_id:
+          type: integer
+        report_id:
+          type: integer
 servers:
 - url: http://{defaultHost}
   variables:

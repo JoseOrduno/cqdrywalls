@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2021_09_02_205343) do
     t.string "address"
     t.date "start_date"
     t.date "finish_date"
-    t.date "cost"
+    t.decimal "cost"
     t.bigint "employee_id"
     t.index ["employee_id"], name: "index_reports_on_employee_id"
     t.index ["user_id"], name: "index_reports_on_user_id"

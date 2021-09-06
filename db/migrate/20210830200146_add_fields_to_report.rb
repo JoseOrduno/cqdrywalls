@@ -6,6 +6,6 @@ class AddFieldsToReport < ActiveRecord::Migration[6.1]
     add_column :reports, :address, :string
     add_column :reports, :start_date, :date
     add_column :reports, :finish_date, :date
-    add_column :reports, :cost, :date
+    add_column :reports, :cost, :decimal
   end
 end

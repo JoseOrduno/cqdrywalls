@@ -5,14 +5,7 @@ RSpec.describe 'api/users', type: :request do
     post 'user-login with simple credentials' do
       tags 'users'
       consumes 'application/json'
-      parameter name: :user, in: :body, schema: {
-        type: :object,
-        properties: {
-          email: { type: :string },
-          password: { type: :string }
-        }
-      }
-
+      parameter name: :user, in: :body, schema: { '$ref' => '#components/schemas/login_data' }
       response '201', 'user created' do
         run_test!
       end
@@ -28,21 +21,7 @@ RSpec.describe 'api/users', type: :request do
       tags 'users'
       consumes 'application/json'
       security [Bearer: {}]
-      parameter name: :user, in: :body, schema: {
-        type: :object,
-        properties: {
-          name: { type: :string },
-          lastname: { type: :string },
-          email: { type: :string },
-          password: { type: :string },
-          role: {
-            type: :string,
-            enum: %i[admin employee]
-          }
-        },
-        required: %w[title content]
-      }
-
+      parameter name: :user, in: :body, schema: { '$ref' => '#components/schemas/user_data' }
       response '201', 'user created' do
         run_test!
       end

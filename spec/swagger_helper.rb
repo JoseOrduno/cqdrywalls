@@ -33,6 +33,60 @@ RSpec.configure do |config|
             name: 'authorization',
             in: :header
           }
+        },
+        schemas: {
+          report_data: {
+            type: :object,
+            properties: {
+              user_id: { type: :integer },
+              employee_id: { type: :integer },
+              name: { type: :string },
+              description: { type: :string },
+              address: { type: :string },
+              start_date: { type: :string, format: :date },
+              finish_date: { type: :string, format: :date },
+              cost: { type: :number },
+              latitude: { type: :number, format: :Float },
+              longitude: { type: :number, format: :Float }
+            }
+          },
+          user_data: {
+            type: :object,
+            properties: {
+              name: { type: :string },
+              lastname: { type: :string },
+              email: { type: :string },
+              password: { type: :string },
+              role: {
+                type: :string,
+                enum: %i[admin employee]
+              }
+            }
+          },
+          login_data: {
+            type: :object,
+            properties: {
+              email: { type: :string },
+              password: { type: :string }
+            }
+          },
+          photo_data: {
+            type: :object,
+            properties: {
+              image_file: { type: :file },
+              name: { type: :string },
+              report_id: { type: :integer }
+            }
+          },
+          comment_data: {
+            type: :object,
+            properties: {
+              title: { type: :string },
+              body: { type: :string },
+              user_id: { type: :integer },
+              report_id: { type: :integer }
+            }
+          }
         }
       },
       servers: [
