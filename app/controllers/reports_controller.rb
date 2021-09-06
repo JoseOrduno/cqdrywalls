@@ -1,9 +1,11 @@
 class ReportsController < ApplicationController
   before_action :set_report, only: %i[show update destroy]
+  before_action :admin?, only: %i[create destroy]
 
   # GET /reports
   def index
-    @reports = @user.admin? ? Report.all : Report.find_by_user_id(@user.id)
+    @user.admin? 
+    @reports = @user.admin? ? Report.all : @user.reports
     render json: @reports
   end
 
@@ -14,7 +16,7 @@ class ReportsController < ApplicationController
 
   # POST /reports
   def create
-    @report = @user.reports.new(report_params.merge(user_id: @user.id))
+    @report = @user.reports.new(report_params)
     if @report.save
       render json: @report, status: :created, location: @report
     else
@@ -45,6 +47,7 @@ class ReportsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def report_params
-    params.permit(:name, :user_id, :latitude, :longitude, :description, :address, :start_date, :finish_date, :cost, :employee_id)
+    params.permit(:name, :user_id, :latitude, :longitude, :description, :address, :start_date, :finish_date, :cost, 
+    :employee_id)
   end
 end
